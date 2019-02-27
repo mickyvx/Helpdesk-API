@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/
+.vscode
+
+# Environment Variables
+server/config/database.json
+package-lock.json
+.env
