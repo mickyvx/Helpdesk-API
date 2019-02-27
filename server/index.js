@@ -2,6 +2,7 @@ import {} from 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import routing from './routes';
 
 const APP = express();
 
@@ -9,10 +10,12 @@ APP.use(cors());
 APP.use(bodyParser.json());
 APP.use(bodyParser.urlencoded({extended: true}));
 
+routing(APP);
+
 APP.get('*', (req, res) => {
   res.status(404).send({
-    status: 'true',
-    message: 'Hello World',
+    status: 'false',
+    message: 'Resource Not Found',
   });
 });
 
