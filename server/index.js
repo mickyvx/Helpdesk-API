@@ -3,12 +3,23 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import routing from './routes';
+import models from './models';
 
 const APP = express();
 
 APP.use(cors());
 APP.use(bodyParser.json());
 APP.use(bodyParser.urlencoded({extended: true}));
+
+// Initialise Database & Create Tables
+models.sequelize
+  .sync()
+  .then(function() {
+    console.log('Database sync successful');
+  })
+  .catch(function(err) {
+    console.log(`Database sync failed: ${err}`);
+  });
 
 routing(APP);
 
