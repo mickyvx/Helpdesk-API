@@ -5,8 +5,16 @@ import {User} from '../models'
 
 passport.use('test', new localStrategy(
   function (username, password, done) {
-    console.log('verification called')
-    return done(null, { username })
+    User.findOne({
+      where: {
+        username: username
+      }
+    })
+    .then((user) => {
+      console.log('verification called')
+      console.log(user)
+      return done(null, user)
+    })
   }
 ))
 
