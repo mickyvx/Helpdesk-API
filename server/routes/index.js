@@ -2,13 +2,15 @@ import userController from '../controllers/user'
 import departmentController from '../controllers/department'
 import ticketController from '../controllers/ticket'
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
   app.get('/', (req, res) => {
     res.status(200).send({
       success: 'true',
       message: 'Hello, World!'
     })
   })
+
+  app.post('/user/login', passport.authenticate('local-login'))
 
   app.get('/user/list', userController.list)
   app.get('/user/:id', userController.read)
