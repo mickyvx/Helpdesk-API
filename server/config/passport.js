@@ -11,41 +11,56 @@ passport.use('test', new localStrategy(
       }
     })
     .then((user) => {
-      console.log('verification called')
-      console.log(user)
-      return done(null, user)
+      console.log('User found')
+      if(bcrypt.compareSync(password, user.password)) {
+        console.log('User found and authenticated')
+        return done(null, user)
+      } else {
+        console.log('Passwords do not match')
+        return done(null, false, { message: 'Passwords do not match' })
+      }
     })
+    .catch(done)
   }
 ))
 
-passport.use('local-login', new localStrategy({
+passport.use('local', new localStrategy({
   usernameField: 'username',
   passwordField: 'password',
-  // passReqToCallback: true,
-  session: false
+  session: true
   }, 
-  
-  (username, password, done) => {
+
+  function (username, password, done) {
     User.findOne({
       where: {
         username: username
       }
     })
     .then((user) => {
-      if(!user) {
-        return done(null, false, { message: 'Invalid username' })
+      console.log('User found')
+      if(bcrypt.compareSync(password, user.password)) {
+        console.log('User found and authenticated')
+        return done(null, user)
       } else {
-        bcrypt.compare(password, user.password)
-        .then(response => {
-          if (!response) {
-            console.log('Passwords do not match')
-            return done(null, false, { message: 'Passwords do not match' })
-          }
-          console.log('User found and authenticated')
-          return done(null, user)
-        })
+        console.log('Passwords do not match')
+        return done(null, false, { message: 'Passwords do not match' })
       }
     })
     .catch(done)
   }
 ))
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id)
+})
+
+passport.deserializeUser(function(id, done) {
+  User.findOne({
+    where: {
+      id: id
+    }
+  })
+  .then((id) => {
+    return done(null, id)
+  })
+})

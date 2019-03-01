@@ -10,11 +10,23 @@ module.exports = function(app, passport) {
     })
   })
 
-  app.post('/user/test', passport.authenticate('test', { session: false, failWithError: true }))
-
-  app.post('/user/login', passport.authenticate('local-login', {
-    failWithError: true
+  app.post('/user/test', passport.authenticate('test', {
+    successRedirect: '/success',
+    failureRedirect: '/failure'
   }))
+
+  app.post('/user/login', passport.authenticate('local', {
+    successRedirect: '/success',
+    failureRedirect: '/failure'
+  }))
+
+  app.get('/success', (req, res) => {
+    res.status(200).send(`Welcome ${req.user.firstName}`)
+  })
+
+  app.get('/failure', (req, res) => {
+    res.send('Failure logging in')
+  })
 
   app.get('/user/list', userController.list)
   app.get('/user/:id', userController.read)
