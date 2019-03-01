@@ -16,11 +16,6 @@ module.exports = function(app, passport) {
     })
   })
 
-  app.post('/user/test', passport.authenticate('test', {
-    successRedirect: '/success',
-    failureRedirect: '/failure'
-  }))
-
   app.post('/user/auth', passport.authenticate('local', {
     successRedirect: '/success',
     failureRedirect: '/failure'

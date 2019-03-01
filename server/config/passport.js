@@ -3,27 +3,6 @@ import localStrategy from 'passport-local'
 import bcrypt from 'bcrypt-nodejs'
 import {User} from '../models'
 
-passport.use('test', new localStrategy(
-  function (username, password, done) {
-    User.findOne({
-      where: {
-        username: username
-      }
-    })
-    .then((user) => {
-      console.log('User found')
-      if(bcrypt.compareSync(password, user.password)) {
-        console.log('User authenticated')
-        return done(null, user)
-      } else {
-        console.log('Passwords do not match')
-        return done(null, false, { message: 'Passwords do not match' })
-      }
-    })
-    .catch(done)
-  }
-))
-
 passport.use('local', new localStrategy({
   usernameField: 'username',
   passwordField: 'password',
