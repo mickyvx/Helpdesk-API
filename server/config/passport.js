@@ -3,10 +3,17 @@ import localStrategy from 'passport-local'
 import bcrypt from 'bcrypt-nodejs'
 import {User} from '../models'
 
+passport.use('test', new localStrategy(
+  function (username, password, done) {
+    console.log('verification called')
+    return done(null, { username })
+  }
+))
+
 passport.use('local-login', new localStrategy({
   usernameField: 'username',
   passwordField: 'password',
-  passReqToCallback: true,
+  // passReqToCallback: true,
   session: false
   }, 
   

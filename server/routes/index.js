@@ -10,7 +10,11 @@ module.exports = function(app, passport) {
     })
   })
 
-  app.post('/user/login', passport.authenticate('local-login'))
+  app.post('/user/test', (req, res) => passport.authenticate('test', { failWithError: true }))
+
+  app.post('/user/login', passport.authenticate('local-login', {
+    failWithError: true
+  }))
 
   app.get('/user/list', userController.list)
   app.get('/user/:id', userController.read)
