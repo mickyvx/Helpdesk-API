@@ -27,10 +27,11 @@ passport.use('test', new localStrategy(
 passport.use('local', new localStrategy({
   usernameField: 'username',
   passwordField: 'password',
+  passReqToCallback: true,
   session: true
   }, 
 
-  function (username, password, done) {
+  function (req, username, password, done) {
     User.findOne({
       where: {
         username: username
