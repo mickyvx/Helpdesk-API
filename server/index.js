@@ -1,6 +1,7 @@
 import {} from 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser';
 import passport from 'passport'
 import session from 'express-session'
@@ -12,10 +13,11 @@ import models from './models';
 const APP = express();
 
 APP.use(cors());
+APP.use(cookieParser())
 APP.use(bodyParser.json());
 APP.use(bodyParser.urlencoded({extended: true}));
  
-APP.use(session({ secret: 'secret-key', cookie: { maxAge: 6000 }, resave: false, saveUninitialized: false }))
+APP.use(session({ secret: 'secret-key', resave: true, saveUninitialized: true }))
 APP.use(passport.initialize())
 APP.use(passport.session())
 

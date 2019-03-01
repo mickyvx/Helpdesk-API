@@ -61,4 +61,5 @@ passport.deserializeUser(function(id, done) {
   .then((id) => {
     return done(null, id)
   })
+  .catch(done)
 })
