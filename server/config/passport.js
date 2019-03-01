@@ -13,7 +13,7 @@ passport.use('test', new localStrategy(
     .then((user) => {
       console.log('User found')
       if(bcrypt.compareSync(password, user.password)) {
-        console.log('User found and authenticated')
+        console.log('User authenticated')
         return done(null, user)
       } else {
         console.log('Passwords do not match')
@@ -37,12 +37,9 @@ passport.use('local', new localStrategy({
       }
     })
     .then((user) => {
-      console.log('User found')
       if(bcrypt.compareSync(password, user.password)) {
-        console.log('User found and authenticated')
         return done(null, user)
       } else {
-        console.log('Passwords do not match')
         return done(null, false, { message: 'Passwords do not match' })
       }
     })
