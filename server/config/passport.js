@@ -7,7 +7,7 @@ passport.use('local', new localStrategy({
   usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true,
-  session: true
+  session: false
   }, 
 
   function (req, username, password, done) {

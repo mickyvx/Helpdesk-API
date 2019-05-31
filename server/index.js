@@ -17,7 +17,7 @@ APP.use(cookieParser())
 APP.use(bodyParser.json());
 APP.use(bodyParser.urlencoded({extended: true}));
  
-APP.use(session({ secret: 'secret-key', resave: true, saveUninitialized: true }))
+// APP.use(session({ secret: 'secret-key', resave: true, saveUninitialized: true }))
 APP.use(passport.initialize())
 APP.use(passport.session())
 
