@@ -3,7 +3,10 @@ import {User} from '../models'
 module.exports = {
   list(req, res) {
     return User.findAll()
-      .then((User) => res.status(200).send(User))
+      .then((User) => {
+        let userResults = User
+        res.status(200).send(userResults)
+      })
       .catch((error) => res.status(400).send(error));
   },
   read(req, res) {
